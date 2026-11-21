@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0d">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Teleprompter para gravar vídeos curtos lendo o roteiro olhando para a câmera.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Teleprompter">
+<meta name="format-detection" content="telephone=no">
+<title>Teleprompter</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="stylesheet" href="./styles.css">
+<script src="./app.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6.5" y="5" width="4" height="14" rx="1.2" fill="currentColor" stroke="none"/><rect x="13.5" y="5" width="4" height="14" rx="1.2" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-flip" viewBox="0 0 24 24"><path d="M3 9a2 2 0 0 1 2-2h2l2-2h6l2 2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M8.6 12.2a3.5 3.5 0 0 1 6.3-1M15.4 14.8a3.5 3.5 0 0 1-6.3 1"/><path d="M15.2 9.3v2h-2M8.8 17.7v-2h2"/></symbol>
+    <symbol id="i-rewind" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4.5h4.5"/><text x="12.3" y="15.6" font-size="8.5" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none" font-family="system-ui, sans-serif">5</text></symbol>
+    <symbol id="i-top" viewBox="0 0 24 24"><path d="M5 4h14"/><path d="M12 20V9M7 14l5-5 5 5"/></symbol>
+    <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.8" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.8" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+    <symbol id="i-paste" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 3h6v4H9z"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M5 20h14"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2-2h2l2-2h6l2 2h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h10M4 18h13"/></symbol>
+    <symbol id="i-redo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/></symbol>
+    <symbol id="i-aa" viewBox="0 0 24 24"><path d="M2.5 19l5-13 5 13M4.5 14h6"/><path d="M14 19l3.5-9 3.5 9M15.2 16h4.6"/></symbol>
+    <symbol id="i-speed" viewBox="0 0 24 24"><path d="M4.5 18a8.5 8.5 0 1 1 15 0"/><path d="M12 14l4.5-4.5"/></symbol>
+  </defs>
+</svg>
+
+<div id="app">
+
+  <!-- ============ ROTEIROS ============ -->
+  <section id="view-list" class="view" data-view="list">
+    <header class="appbar">
+      <div class="appbar-title"><span class="brand-dot" aria-hidden="true"></span><h1>Roteiros</h1></div>
+      <div class="appbar-actions">
+        <button class="pill-btn" id="btnInstall" type="button" hidden><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg><span>Instalar</span></button>
+        <button class="icon-btn" id="btnListSettings" type="button" aria-label="Ajustes"><svg class="ico" aria-hidden="true"><use href="#i-sliders"/></svg></button>
+      </div>
+    </header>
+    <main class="list-main">
+      <div class="ios-tip" id="iosTip" hidden>
+        <p>Para instalar no iPhone: toque em <strong>Compartilhar</strong> e depois em <strong>Adicionar à Tela de Início</strong>.</p>
+        <button class="icon-btn small" id="btnIosTipClose" type="button" aria-label="Fechar dica"><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>
+      </div>
+      <ul id="scriptList" class="script-list" aria-label="Roteiros salvos"></ul>
+      <div id="emptyState" class="empty" hidden>
+        <div class="empty-art" aria-hidden="true"><svg class="ico"><use href="#i-text"/></svg></div>
+        <h2>Nenhum roteiro ainda</h2>
+        <p>Crie um roteiro, cole o texto e grave olhando para a câmera.</p>
+      </div>
+    </main>
+    <button class="fab" id="btnNew" type="button"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg><span>Novo roteiro</span></button>
+  </section>
+
+  <!-- ============ EDITOR ============ -->
+  <section id="view-editor" class="view" data-view="editor" hidden>
+    <header class="appbar">
+      <button class="icon-btn" id="btnEditorBack" type="button" aria-label="Voltar para os roteiros"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button>
+      <span class="save-state" id="saveState" aria-live="polite">Salvo</span>
+      <button class="icon-btn" id="btnEditorMore" type="button" aria-label="Mais ações do roteiro"><svg class="ico" aria-hidden="true"><use href="#i-dots"/></svg></button>
+    </header>
+    <main class="editor-main">
+      <label class="sr-only" for="edTitle">Título do roteiro</label>
+      <input id="edTitle" class="ed-title" type="text" placeholder="Título do roteiro" maxlength="120" autocomplete="off" enterkeyhint="next">
+      <label class="sr-only" for="edText">Texto do roteiro</label>
+      <textarea id="edText" class="ed-text" placeholder="Escreva ou cole o roteiro aqui.&#10;&#10;Dica: texto entre [colchetes] aparece apagado no teleprompter, bom para marcar [pausa] ou [sorriso]."></textarea>
+    </main>
+    <footer class="editor-bar">
+      <button class="chip-btn" id="btnPaste" type="button"><svg class="ico" aria-hidden="true"><use href="#i-paste"/></svg><span>Colar</span></button>
+      <span class="ed-count" id="edCount" aria-live="polite">0 palavras</span>
+      <button class="btn primary" id="btnEditorPlay" type="button"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg><span>Gravar</span></button>
+    </footer>
+  </section>
+
+  <!-- ============ TELEPROMPTER ============ -->
+  <section id="view-prompter" class="view prompter" data-view="prompter" hidden>
+    <video id="cam" class="cam" playsinline muted autoplay disablepictureinpicture aria-hidden="true"></video>
+
+    <div class="stage" id="stage" aria-label="Texto do roteiro. Toque para pausar ou continuar, arraste para reposicionar.">
+      <div class="band" id="band" data-area="top">
+        <div class="band-bg" aria-hidden="true"></div>
+        <div class="viewport" id="viewport">
+          <div class="flipper" id="flipper">
+            <div class="guide" id="guide" aria-hidden="true"><i></i><span></span><i></i></div>
+            <div class="scroller" id="scroller">
+              <div class="script-text" id="scriptText"></div>
+              <div class="end-mark" aria-hidden="true">fim</div>
+            </div>
+          </div>
+        </div>
+        <div class="state-chip" id="stateChip" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <header class="tp-top">
+      <div class="tp-top-row">
+        <button class="icon-btn glass" id="btnTpClose" type="button" aria-label="Sair do teleprompter"><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>
+        <div class="status-pill glass" id="statusPill"><span class="rec-dot" aria-hidden="true"></span><span id="statusText">Câmera</span></div>
+        <div class="tp-top-actions">
+          <button class="icon-btn glass" id="btnFlip" type="button" aria-label="Trocar câmera"><svg class="ico" aria-hidden="true"><use href="#i-flip"/></svg></button>
+          <button class="icon-btn glass" id="btnMode" type="button" aria-label="Mudar para modo só ler"><svg class="ico" aria-hidden="true"><use href="#i-text"/></svg></button>
+        </div>
+      </div>
+      <div class="tp-progress-row">
+        <div class="progress" role="progressbar" aria-label="Progresso do roteiro" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress"><div class="progress-fill" id="progressFill"></div></div>
+        <span class="remaining" id="remaining">0:00</span>
+      </div>
+    </header>
+
+    <div class="tp-rail glass" role="group" aria-label="Ajustes rápidos">
+      <button class="rail-btn" id="spdUp" type="button" aria-label="Aumentar velocidade"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></button>
+      <span class="rail-val" title="Velocidade"><svg class="ico" aria-hidden="true"><use href="#i-speed"/></svg><b id="spdVal">11</b></span>
+      <button class="rail-btn" id="spdDown" type="button" aria-label="Diminuir velocidade"><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg></button>
+      <span class="rail-sep" aria-hidden="true"></span>
+      <button class="rail-btn" id="sizeUp" type="button" aria-label="Aumentar texto"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></button>
+      <span class="rail-val" title="Tamanho do texto"><svg class="ico" aria-hidden="true"><use href="#i-aa"/></svg><b id="sizeVal">40</b></span>
+      <button class="rail-btn" id="sizeDown" type="button" aria-label="Diminuir texto"><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg></button>
+    </div>
+
+    <div class="cam-msg glass" id="camMsg" role="alert" hidden>
+      <p id="camMsgText">A câmera não está disponível.</p>
+      <div class="cam-msg-actions">
+        <button class="btn small" id="btnCamRetry" type="button">Tentar de novo</button>
+        <button class="btn small ghost" id="btnCamDismiss" type="button">Só ler</button>
+      </div>
+    </div>
+
+    <footer class="tp-bottom">
+      <button class="icon-btn glass" id="btnTop" type="button" aria-label="Voltar ao início do texto"><svg class="ico" aria-hidden="true"><use href="#i-top"/></svg></button>
+      <button class="icon-btn glass" id="btnRewind" type="button" aria-label="Voltar 5 segundos"><svg class="ico" aria-hidden="true"><use href="#i-rewind"/></svg></button>
+      <button class="main-btn" id="btnMain" type="button" data-state="record" aria-label="Começar a gravar"><span class="main-inner"><svg class="ico ico-play" aria-hidden="true"><use href="#i-play"/></svg><svg class="ico ico-pause" aria-hidden="true"><use href="#i-pause"/></svg></span></button>
+      <button class="icon-btn glass" id="btnPlay" type="button" aria-label="Rolar o texto"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></button>
+      <button class="icon-btn glass" id="btnTpSettings" type="button" aria-label="Ajustes"><svg class="ico" aria-hidden="true"><use href="#i-sliders"/></svg></button>
+    </footer>
+
+    <div class="countdown" id="countdown" hidden>
+      <span class="countdown-num" id="countdownNum">3</span>
+      <span class="countdown-hint">Toque para cancelar</span>
+    </div>
+  </section>
+
+  <!-- ============ RESULTADO ============ -->
+  <section id="view-result" class="view result" data-view="result" hidden>
+    <header class="appbar">
+      <button class="icon-btn" id="btnResultBack" type="button" aria-label="Voltar ao teleprompter"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button>
+      <div class="result-head"><h1>Gravação</h1><span id="resMeta" class="muted">0:00</span></div>
+      <span class="appbar-spacer" aria-hidden="true"></span>
+    </header>
+    <main class="result-main">
+      <video id="resVideo" class="res-video" playsinline controls preload="metadata"></video>
+      <p class="res-name muted" id="resName"></p>
+    </main>
+    <footer class="result-actions">
+      <button class="btn primary big" id="btnShare" type="button"><svg class="ico" aria-hidden="true"><use href="#i-share"/></svg><span>Salvar / Compartilhar</span></button>
+      <button class="btn big" id="btnDownload" type="button"><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg><span>Baixar</span></button>
+      <div class="result-row">
+        <button class="btn" id="btnAgain" type="button"><svg class="ico" aria-hidden="true"><use href="#i-redo"/></svg><span>Gravar de novo</span></button>
+        <button class="btn danger-ghost" id="btnDiscard" type="button"><svg class="ico" aria-hidden="true"><use href="#i-trash"/></svg><span>Descartar</span></button>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ============ AJUSTES (painel de baixo) ============ -->
+  <div class="sheet-wrap" id="sheetWrap" hidden>
+    <div class="sheet-backdrop" id="sheetBackdrop"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+      <div class="sheet-handle" aria-hidden="true"></div>
+      <div class="sheet-head">
+        <h2 id="sheetTitle">Ajustes</h2>
+        <button class="icon-btn small" id="btnSheetClose" type="button" aria-label="Fechar ajustes"><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>
+      </div>
+      <div class="sheet-body" id="sheetBody">
+
+        <h3 class="sheet-section">Texto</h3>
+        <div class="field">
+          <div class="field-top"><label for="setFontSize">Tamanho do texto</label><output data-out="fontSize">40 px</output></div>
+          <input id="setFontSize" type="range" min="18" max="96" step="1" data-setting="fontSize">
+        </div>
+        <div class="field">
+          <div class="field-top"><label for="setSpeed">Velocidade</label><output data-out="speed">11</output></div>
+          <input id="setSpeed" type="range" min="1" max="30" step="1" data-setting="speed">
+        </div>
+        <div class="field">
+          <div class="field-top"><label for="setLineHeight">Espaço entre linhas</label><output data-out="lineHeight">1,4</output></div>
+          <input id="setLineHeight" type="range" min="1" max="2.2" step="0.05" data-setting="lineHeight">
+        </div>
+        <div class="field">
+          <div class="field-top"><label for="setMargin">Margem lateral</label><output data-out="margin">6%</output></div>
+          <input id="setMargin" type="range" min="0" max="25" step="1" data-setting="margin">
+        </div>
+        <div class="field">
+          <span class="field-label" id="lblAlign">Alinhamento</span>
+          <div class="seg" data-setting="align" role="group" aria-labelledby="lblAlign">
+            <button type="button" data-value="left">Esquerda</button>
+            <button type="button" data-value="center">Centro</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label" id="lblColor">Cor do texto</span>
+          <div class="seg swatches" data-setting="color" role="group" aria-labelledby="lblColor">
+            <button type="button" data-value="white"><i style="background:#ffffff"></i>Branco</button>
+            <button type="button" data-value="yellow"><i style="background:#ffe34d"></i>Amarelo</button>
+            <button type="button" data-value="green"><i style="background:#a6f5a6"></i>Verde</button>
+          </div>
+        </div>
+        <label class="switch-row"><span>Maiúsculas</span><input type="checkbox" role="switch" data-setting="upper"></label>
+        <label class="switch-row"><span>Negrito</span><input type="checkbox" role="switch" data-setting="bold"></label>
+
+        <h3 class="sheet-section">Área de leitura</h3>
+        <div class="field">
+          <span class="field-label" id="lblArea">Altura da faixa de texto</span>
+          <div class="seg" data-setting="area" role="group" aria-labelledby="lblArea">
+            <button type="button" data-value="top">Terço de cima</button>
+            <button type="button" data-value="half">Metade</button>
+            <button type="button" data-value="full">Tela cheia</button>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-top"><label for="setBg">Fundo atrás do texto</label><output data-out="bgOpacity">45%</output></div>
+          <input id="setBg" type="range" min="0" max="90" step="5" data-setting="bgOpacity">
+        </div>
+        <label class="switch-row"><span>Linha guia de leitura</span><input type="checkbox" role="switch" data-setting="guide"></label>
+        <label class="switch-row"><span>Espelhar na horizontal <small>para vidro de teleprompter</small></span><input type="checkbox" role="switch" data-setting="flipH"></label>
+        <label class="switch-row"><span>Inverter na vertical</span><input type="checkbox" role="switch" data-setting="flipV"></label>
+
+        <h3 class="sheet-section">Gravação</h3>
+        <div class="field">
+          <span class="field-label" id="lblQuality">Qualidade do vídeo</span>
+          <div class="seg" data-setting="quality" role="group" aria-labelledby="lblQuality">
+            <button type="button" data-value="720">720p</button>
+            <button type="button" data-value="1080">1080p</button>
+            <button type="button" data-value="4k">4K</button>
+          </div>
+          <p class="field-note" id="qualityNote"></p>
+        </div>
+        <div class="field">
+          <span class="field-label" id="lblCountdown">Contagem regressiva</span>
+          <div class="seg" data-setting="countdown" data-type="num" role="group" aria-labelledby="lblCountdown">
+            <button type="button" data-value="0">Sem</button>
+            <button type="button" data-value="3">3 s</button>
+            <button type="button" data-value="5">5 s</button>
+            <button type="button" data-value="10">10 s</button>
+          </div>
+        </div>
+        <label class="switch-row"><span>Começar a gravar e rolar juntos</span><input type="checkbox" role="switch" data-setting="startTogether"></label>
+        <label class="switch-row"><span>Parar a gravação no fim do texto</span><input type="checkbox" role="switch" data-setting="autoStop"></label>
+
+        <button class="btn ghost full" id="btnResetSettings" type="button">Restaurar padrões</button>
+        <p class="sheet-foot muted">Os roteiros e ajustes ficam só neste aparelho.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DIÁLOGO ============ -->
+  <div class="dialog-wrap" id="dialogWrap" hidden>
+    <div class="dialog-backdrop" id="dialogBackdrop"></div>
+    <div class="dialog" id="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitle" aria-describedby="dialogMsg">
+      <h2 id="dialogTitle"></h2>
+      <p id="dialogMsg"></p>
+      <div class="dialog-actions" id="dialogActions"></div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+</div>
+</body>
+</html>
